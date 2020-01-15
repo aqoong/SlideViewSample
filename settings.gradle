@@ -1,0 +1,2 @@
+include ':app', ':slideview'
+rootProject.name='SlideViewSample'
