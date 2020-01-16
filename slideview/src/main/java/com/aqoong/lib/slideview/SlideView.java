@@ -58,7 +58,6 @@ public class SlideView extends RecyclerView {
 
         @Override
         public void run() {
-            Log.d(TAG, "move scroll");
             smoothScrollBy(pixelsToMove, 0);
             mHandler.postDelayed(this, duration);
         }
@@ -82,7 +81,8 @@ public class SlideView extends RecyclerView {
                 LinearLayoutManager layoutManager = (LinearLayoutManager)recyclerView.getLayoutManager();
                 int lastItem = layoutManager.findFirstVisibleItemPosition();
 
-                if(layoutManager.findViewByPosition(lastItem) instanceof ImageView && lastItem != curScrollPosition){
+                Log.d(TAG, ""+lastItem);
+                if(lastItem != curScrollPosition && layoutManager.findViewByPosition(lastItem) instanceof ImageView){
                     curScrollPosition = lastItem;
                     try {
                         Log.d(TAG, "Sleep");
@@ -90,13 +90,15 @@ public class SlideView extends RecyclerView {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    curScrollPosition++;
+                    Thread.interrupted();
+
                 }
-                Thread.interrupted();
+
 
 
                 if(lastItem+1 >= layoutManager.getItemCount()){
                     mHandler.removeCallbacks(SCROLLING_RUNNABLE);
+                    curScrollPosition = -1;
                     Handler postHandler = new Handler();
                     postHandler.post(new Runnable() {
                         @Override
