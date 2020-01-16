@@ -93,6 +93,7 @@ public class SlideView extends RecyclerView {
                         e.printStackTrace();
                     }
                     Thread.interrupted();
+                    curScrollPosition++;
                 }
 
 
