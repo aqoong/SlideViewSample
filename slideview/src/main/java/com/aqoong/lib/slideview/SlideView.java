@@ -108,6 +108,11 @@ public class SlideView extends RecyclerView {
         adapter.notifyDataSetChanged();
     }
 
+    public void addFlowObject(FlowObject object){
+        adapter.addItem(object);
+        adapter.notifyDataSetChanged();
+    }
+
     private class SlideViewAdapter extends RecyclerView.Adapter<ViewHolder>{
         private ArrayList<FlowObject> slideList = new ArrayList<>();
         @NonNull

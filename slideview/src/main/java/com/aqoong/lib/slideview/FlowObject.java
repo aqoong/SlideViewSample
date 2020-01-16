@@ -2,16 +2,7 @@ package com.aqoong.lib.slideview;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-
-import androidx.appcompat.widget.AppCompatTextView;
 
 /**
  * Created by andy on 2020-01-14.
@@ -29,9 +20,7 @@ public class FlowObject {
     private boolean isAlpha;
     private float   textSize;
 
-    private View    createdView;
-
-    private enum TYPE{
+    public enum TYPE{
         TEXT,
         IMAGE,
         EMPTY
