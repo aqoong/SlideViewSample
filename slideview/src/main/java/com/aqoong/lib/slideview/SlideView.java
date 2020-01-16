@@ -73,14 +73,12 @@ public class SlideView extends RecyclerView {
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
 
         this.setLayoutManager(layoutManager);
-        this.setLayoutManager(new SpeedyLinearLayoutManager(getContext(), SpeedyLinearLayoutManager.HORIZONTAL, false));
         this.setAdapter(adapter);
 
         this.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(final RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-//                SpeedyLinearLayoutManager layoutManager = (SpeedyLinearLayoutManager) recyclerView.getLayoutManager();
                 LinearLayoutManager layoutManager = (LinearLayoutManager)recyclerView.getLayoutManager();
                 int lastItem = layoutManager.findFirstVisibleItemPosition();
 
@@ -92,9 +90,9 @@ public class SlideView extends RecyclerView {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    Thread.interrupted();
                     curScrollPosition++;
                 }
+                Thread.interrupted();
 
 
                 if(lastItem+1 >= layoutManager.getItemCount()){
