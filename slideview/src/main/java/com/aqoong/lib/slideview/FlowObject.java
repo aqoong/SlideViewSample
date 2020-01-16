@@ -87,6 +87,18 @@ public class FlowObject {
         return textSize;
     }
 
+    public Builder getBuilder() {
+        return mBuilder;
+    }
+
+    public void setAlpha(boolean alpha) {
+        isAlpha = alpha;
+    }
+
+    public void setTextSize(float textSize) {
+        this.textSize = textSize;
+    }
+
     public static class Builder{
         String  text;
         int     imageRes;
