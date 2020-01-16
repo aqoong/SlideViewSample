@@ -1,6 +1,7 @@
 package com.aqoong.lib.slideview;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import android.os.Handler;
 import android.os.Looper;
@@ -29,6 +30,7 @@ public class SlideView extends RecyclerView {
     private final String TAG = getClass().getSimpleName();
     private SlideViewAdapter adapter;
     private int curScrollPosition = 0;
+
     public SlideView(Context context) {
         this(context, null);
     }
@@ -36,11 +38,21 @@ public class SlideView extends RecyclerView {
     public SlideView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.SlideView);
+        try{
+            duration = ta.getInt(R.styleable.SlideView_moveDuration, 30);
+            pixelsToMove = ta.getInt(R.styleable.SlideView_pixelMove, 50);
+        }catch (Exception e){
+
+        }finally {
+            ta.recycle();
+        }
+
         setup();
     }
 
-    final int duration = 30;
-    final int pixelsToMove = 50;
+    int duration = 30;
+    int pixelsToMove = 50;
     private final Handler mHandler = new Handler(Looper.getMainLooper());
     private final Runnable SCROLLING_RUNNABLE = new Runnable() {
 
