@@ -15,26 +15,29 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         SlideView slideView = findViewById(R.id.slide);
+        slideView.addFlowObject(new FlowObject.Builder());
         slideView.addFlowObject(new FlowObject.Builder(R.drawable.ic_launcher_foreground, "#FFFFFF", false));
         slideView.addFlowObject(new FlowObject.Builder(R.drawable.ic_launcher_foreground, "#FFFFFF", false));
         slideView.addFlowObject(new FlowObject.Builder(R.drawable.ic_launcher_foreground, "#FFFFFF", false));
-        slideView.addFlowObject(new FlowObject.Builder("TESTTESTESTESTESTJKDLFNDKLGNDISTJEISLKJFDLFKNSFKLDSNMFLKDNFKLDSNFDSKLFNDKLSFNDKLSFNDSF",
+        slideView.addFlowObject(new FlowObject.Builder("TESTTESTESTESTESTJKDLFNDKLGNDISTJEISLKJFDLFKNSFKLDSNMFLKDNFKLDSNFDSKLFNDKLSFNDKLSFNDSFfdsakdsanvkdlsnavkldsnmvkldsnvkldsanvkldsa2121212121",
                 "#FFFFFF",
+                50,
                 "#000000",
                 false
                 ));
-        slideView.addFlowObject(new FlowObject.Builder("TESTTESTESTESTESTJKDLFNDKLGNDISTJEISLKJFDLFKNSFKLDSNMFLKDNFKLDSNFDSKLFNDKLSFNDKLSFNDSF",
-                "#FFFFFF",
-                "#000000",
-                false
-        ));
-        slideView.addFlowObject(new FlowObject.Builder("TESTTESTESTESTESTJKDLFNDKLGNDISTJEISLKJFDLFKNSFKLDSNMFLKDNFKLDSNFDSKLFNDKLSFNDKLSFNDSF",
-                "#FFFFFF",
-                "#000000",
-                false
-        ));
+//        slideView.addFlowObject(new FlowObject.Builder("TESTTESTESTESTESTJKDLFNDKLGNDISTJEISLKJFDLFKNSFKLDSNMFLKDNFKLDSNFDSKLFNDKLSFNDKLSFNDSF",
+//                "#FFFFFF",
+//                "#000000",
+//                false
+//        ));
+//        slideView.addFlowObject(new FlowObject.Builder("TESTTESTESTESTESTJKDLFNDKLGNDISTJEISLKJFDLFKNSFKLDSNMFLKDNFKLDSNFDSKLFNDKLSFNDKLSFNDSF",
+//                "#FFFFFF",
+//                "#000000",
+//                false
+//        ));
+        slideView.addFlowObject(new FlowObject.Builder());
 
-
+        slideView.invalidate();
     }
 
 }

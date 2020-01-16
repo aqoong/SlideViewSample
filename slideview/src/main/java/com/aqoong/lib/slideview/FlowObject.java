@@ -27,19 +27,19 @@ public class FlowObject {
     private int     backgroundColor;
     private int     textColor;
     private boolean isAlpha;
-
-    private Animation.AnimationListener animationListener;
+    private float   textSize;
 
     private View    createdView;
 
     private enum TYPE{
         TEXT,
-        IMAGE
+        IMAGE,
+        EMPTY
     }
     private TYPE type;
     private Context mContext;
 
-    public FlowObject(Context context, Builder builder, Animation.AnimationListener animationListener){
+    public FlowObject(Context context, Builder builder){
         this.mBuilder = builder;
         this.mContext = context;
         this.text = builder.text;
@@ -48,78 +48,18 @@ public class FlowObject {
         this.textColor = builder.textColor;
         this.type = builder.type;
         this.isAlpha = builder.isAlpha;
-        this.animationListener = animationListener;
-    }
-
-
-    public View createFlowObjectView(){
-        if(mBuilder == null){
-            Log.d(TAG, "Object null Exception.");
-            return null;
-        }
-        LinearLayout.LayoutParams commonParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-
-        switch (type){
-            case IMAGE:
-                ImageView imageView = new ImageView(mContext);
-                imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                imageView.setLayoutParams(commonParams);
-                imageView.setImageResource(imageRes);
-                if(isAlpha){
-                    imageView.setColorFilter(backgroundColor);
-                    imageView.setBackgroundTintMode(PorterDuff.Mode.CLEAR);
-                }
-                imageView.setBackgroundColor(backgroundColor);
-
-                createdView = imageView;
-                return imageView;
-            case TEXT:
-                AppCompatTextView textView = new AppCompatTextView(mContext);
-                textView.setLayoutParams(commonParams);
-                textView.setText(text);
-                textView.setTextColor(textColor);
-                textView.setBackgroundColor(backgroundColor);
-                if(isAlpha)
-                {
-                    textView.setTextColor(backgroundColor);
-                    textView.setBackgroundTintMode(PorterDuff.Mode.CLEAR);
-                }
-                createdView = textView;
-                return textView;
-            default:
-                return null;
-        }
+        this.textSize = builder.textSize;
     }
 
     public int getType(){
-        return this.type == TYPE.IMAGE ? 0 : 1;
-    }
+        switch (type){
+            case IMAGE:
+                return 0;
+            case TEXT:
+                return 1;
+            default:
+                return 3;
 
-    public void startAnimation(){
-        if(createdView != null){
-            Animation animation = null;
-            if(createdView instanceof ImageView){
-                animation = AnimationUtils.loadAnimation(mContext, R.anim.anim_image);
-            }else if(createdView instanceof AppCompatTextView){
-                animation = AnimationUtils.loadAnimation(mContext, R.anim.anim_text);
-            }
-            animation.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-                    animationListener.onAnimationStart(animation);
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    animationListener.onAnimationEnd(animation);
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-
-                }
-            });
-            createdView.startAnimation(animation);
         }
     }
 
@@ -143,8 +83,8 @@ public class FlowObject {
         return isAlpha;
     }
 
-    public Animation.AnimationListener getAnimationListener() {
-        return animationListener;
+    public float getTextSize() {
+        return textSize;
     }
 
     public static class Builder{
@@ -154,19 +94,26 @@ public class FlowObject {
         int     textColor;
         TYPE    type;
         boolean isAlpha;
+        float   textSize;
 
-        public Builder(String text, String textColor, String backgroundColor, boolean alpha){
+        public Builder(String text, String textColor, float textSize, String backgroundColor, boolean alpha){
             this.text = text;
             this.textColor = Color.parseColor(textColor);
             this.backgroundColor = Color.parseColor(backgroundColor);
             this.type = TYPE.TEXT;
             this.isAlpha = alpha;
+            this.textSize = textSize;
         }
         public Builder(int image, String backgroundColor, boolean alpha){
             this.imageRes = image;
             this.backgroundColor = Color.parseColor(backgroundColor);
             this.type = TYPE.IMAGE;
             this.isAlpha = alpha;
+        }
+        public Builder(){
+            this.type = TYPE.EMPTY;
+            this.backgroundColor = Color.parseColor("#000000");
+            this.isAlpha = true;
         }
     }
 }
