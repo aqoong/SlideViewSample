@@ -84,13 +84,15 @@ public class SlideView extends RecyclerView {
                 Log.d(TAG, ""+lastItem);
                 if(lastItem != curScrollPosition && layoutManager.findViewByPosition(lastItem) instanceof ImageView){
                     curScrollPosition = lastItem;
-                    try {
-                        Log.d(TAG, "Sleep");
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    Thread.interrupted();
+//                    try {
+//                        Log.d(TAG, "Sleep");
+//                        Thread.sleep(2000);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                    Thread.interrupted();
+                    mHandler.removeCallbacks(SCROLLING_RUNNABLE);
+                    mHandler.postDelayed(SCROLLING_RUNNABLE, 2000);
 
                 }
 
