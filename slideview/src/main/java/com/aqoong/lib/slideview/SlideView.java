@@ -128,6 +128,17 @@ public class SlideView extends RecyclerView {
         adapter.notifyDataSetChanged();
     }
 
+    public void clearObjectList(){
+        adapter.clearItems(this.adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    public void removeItem(int position){
+        adapter.removeItem(position, this.adapter);
+        this.adapter.notifyDataSetChanged();
+    }
+
+
     private class SlideViewAdapter extends RecyclerView.Adapter<ViewHolder>{
         private ArrayList<FlowObject> slideList = new ArrayList<>();
         @NonNull
@@ -211,7 +222,6 @@ public class SlideView extends RecyclerView {
 
         public void addItem(FlowObject object){
             slideList.add(object);
-            notifyDataSetChanged();
         }
 
         public void removeItem(FlowObject object, SlideViewAdapter adapter){
@@ -220,7 +230,6 @@ public class SlideView extends RecyclerView {
                 slideList.remove(object);
                 setAdapter(this);
             }
-            notifyDataSetChanged();
         }
         public FlowObject getItem(int position){
             if(position < slideList.size() && position > -1){
@@ -232,6 +241,14 @@ public class SlideView extends RecyclerView {
         public void removeItem(int position, SlideViewAdapter adapter){
             if(position < slideList.size() && position > -1) {
                 this.removeItem(slideList.get(position), adapter);
+            }
+        }
+
+        public void clearItems(SlideViewAdapter adapter){
+            if(slideList != null && !slideList.isEmpty()) {
+                for (int i = slideList.size() - 1; i >= 0; i--) {
+                    this.removeItem(i, adapter);
+                }
             }
         }
 
