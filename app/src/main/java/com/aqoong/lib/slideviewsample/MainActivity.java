@@ -3,9 +3,11 @@ package com.aqoong.lib.slideviewsample;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.aqoong.lib.slideview.FlowObject;
+import com.aqoong.lib.slideview.ScrollPositionListener;
 import com.aqoong.lib.slideview.SlideView;
 
 public class MainActivity extends AppCompatActivity {
@@ -16,6 +18,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         final SlideView slideView = findViewById(R.id.slide);
+        slideView.setSlideViewListener(new ScrollPositionListener() {
+            @Override
+            public void nowScrollPosition(int position) {
+                Log.d("TEST", ""+position);
+            }
+
+            @Override
+            public void onEvent(SlideView.ScrollStatus status) {
+                switch (status){
+                    case LAST:
+                        slideView.clearObjectList();
+                        break;
+                }
+            }
+        });
         slideView.addFlowObject(new FlowObject.Builder());
         slideView.addFlowObject(new FlowObject.Builder(R.drawable.ic_launcher_foreground, "#FFFFFF", false));
         slideView.addFlowObject(new FlowObject.Builder(R.drawable.ic_launcher_foreground, "#FFFFFF", false));

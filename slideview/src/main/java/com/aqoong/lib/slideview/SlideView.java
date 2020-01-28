@@ -31,6 +31,8 @@ public class SlideView extends RecyclerView {
     private SlideViewAdapter adapter;
     private int curScrollPosition = 0;
 
+    private ScrollPositionListener listener;
+
     public SlideView(Context context) {
         this(context, null);
     }
@@ -49,6 +51,10 @@ public class SlideView extends RecyclerView {
         }
 
         setup();
+    }
+
+    public void setSlideViewListener(ScrollPositionListener listener){
+        this.listener = listener;
     }
 
     int duration = 30;
@@ -81,16 +87,14 @@ public class SlideView extends RecyclerView {
                 LinearLayoutManager layoutManager = (LinearLayoutManager)recyclerView.getLayoutManager();
                 int lastItem = layoutManager.findFirstVisibleItemPosition();
 
-                Log.d(TAG, ""+lastItem);
+                if(listener != null){
+                    listener.nowScrollPosition(curScrollPosition);
+                }
+
+//                Log.d(TAG, ""+lastItem);
                 if(lastItem != curScrollPosition && layoutManager.findViewByPosition(lastItem) instanceof ImageView){
                     curScrollPosition = lastItem;
-//                    try {
-//                        Log.d(TAG, "Sleep");
-//                        Thread.sleep(2000);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                    Thread.interrupted();
+
                     mHandler.removeCallbacks(SCROLLING_RUNNABLE);
                     mHandler.postDelayed(SCROLLING_RUNNABLE, 2000);
 
@@ -100,17 +104,28 @@ public class SlideView extends RecyclerView {
 
                 if(lastItem+1 >= layoutManager.getItemCount()){
                     mHandler.removeCallbacks(SCROLLING_RUNNABLE);
-                    curScrollPosition = -1;
+                    curScrollPosition = 0;
                     Handler postHandler = new Handler();
                     postHandler.post(new Runnable() {
                         @Override
                         public void run() {
                             Log.d(TAG, "restart scroll");
+                            if(listener != null){
+                                listener.onEvent(ScrollStatus.LAST);
+                            }
                             setAdapter(null);
                             setAdapter(adapter);
                             mHandler.post(SCROLLING_RUNNABLE);
                         }
                     });
+                }
+
+                if(listener != null){
+                    ScrollStatus status = ScrollStatus.ROLLING;
+                    if(curScrollPosition == 0){
+                        status = ScrollStatus.FIRST;
+                    }
+                    listener.onEvent(status);
                 }
             }
         });
@@ -283,4 +298,12 @@ public class SlideView extends RecyclerView {
             }
         }
     }
+
+    public enum ScrollStatus{
+        FIRST,
+        ROLLING,
+        LAST
+    }
+
+
 }
