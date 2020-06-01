@@ -186,6 +186,7 @@ public class SlideView extends RecyclerView {
                 ((TextViewHolder)holder).textView.setTextColor(object.getTextColor());
                 ((TextViewHolder)holder).textView.setBackgroundColor(object.getBackgroundColor());
                 ((TextViewHolder)holder).textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, object.getTextSize());
+                ((TextViewHolder)holder).textView.setTypeface(object.getFontRes());
                 if(object.isAlpha())
                 {
                     ((TextViewHolder)holder).textView.setTextColor(object.getBackgroundColor());

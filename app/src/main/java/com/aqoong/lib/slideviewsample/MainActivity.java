@@ -41,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
                 "#FFFFFF",
                 50,
                 "#000000",
-                false
+                false,
+                R.font.nanumgothic
                 ));
         slideView.addFlowObject(new FlowObject.Builder());
         slideView.invalidate();
@@ -56,7 +57,8 @@ public class MainActivity extends AppCompatActivity {
                         "#FFFFFF",
                         30,
                         "#000000",
-                        false
+                        false,
+                        R.font.nanumgothic
                 ));
                 slideView.addFlowObject(new FlowObject.Builder());
                 slideView.invalidate();
